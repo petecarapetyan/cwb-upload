@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import { sharedStyles } from "./shared-styles";
 
-import './auth-status'
+import './file-upload'
 
 
 declare global {
@@ -17,7 +17,7 @@ export class AppShellElement extends LitElement {
 
   render() {
     return html`
-    <auth-status></auth-status>
+    <file-upload></file-upload>
     `
   }
 

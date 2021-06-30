@@ -34,6 +34,8 @@ export const app = loadFirebase.then(firebase => firebase.app())
 
 export const authLoader = app.then(app => loadModule('auth').then(() => app.auth()))
 
+export const storageLoader = app.then((app) =>  loadModule("storage").then(() => app.storage()));
+
 export const firestoreLoader = app.then(app => loadModule('firestore').then(() => {
   const fs = app.firestore()
   fs.enablePersistence({ synchronizeTabs: true })
