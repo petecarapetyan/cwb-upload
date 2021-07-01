@@ -1,6 +1,6 @@
 import { createModel } from "@captaincodeman/rdx";
 import { State } from "../store";
-import { storageLoader } from "../firebase";
+import { storageLoader, firestoreLoader } from "../firebase";
 import { createSelector } from "reselect";
 
 export interface UploadState {
@@ -47,7 +47,18 @@ export default createModel({
             _store.getDispatch().upload.message(`You have uploaded the file ${file.name}`);                 
           }
         );
+        _store.getDispatch().upload.createRecord(name)
       }
+    },
+    async createRecord(name: string) {
+      const db = await firestoreLoader;
+      db.collection("photos")
+        .add({
+          name
+        })
+        .catch(function (error) {
+          console.error(`Error adding ${name}`, error);
+        });
     },
     init(){
       _store.getDispatch().upload.message(""); 
