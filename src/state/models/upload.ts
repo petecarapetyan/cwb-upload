@@ -52,7 +52,7 @@ export default createModel({
     },
     async createRecord(name: string) {
       const db = await firestoreLoader;
-      db.collection("photos")
+      db.collection("media")
         .add({
           name
         })
