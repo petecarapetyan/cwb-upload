@@ -2,6 +2,7 @@ import { createModel } from "@captaincodeman/rdx";
 import { State } from "../store";
 import { storageLoader, firestoreLoader } from "../firebase";
 import { createSelector } from "reselect";
+import { underscore4space } from '../../pleasemigrate/regex';
 
 export interface UploadState {
   file?: {};
@@ -27,8 +28,8 @@ export default createModel({
   },
   effects: (_store) => ({
     async upload(file: File) {
-      const name = "" + new Date().getTime() + "_" + file.name;
-      const ref = (await storageLoader).ref(name);
+      const name = underscore4space(`${new Date().getTime()}_${file.name}`)
+      const ref = (await storageLoader).ref(`mediaUploaded/${name}`);
       if (file && file.name) {
         ref.put(file);
         const theUpload = ref.put(file);
@@ -37,14 +38,15 @@ export default createModel({
           function progress(soFar) {
             let percent = soFar.bytesTransferred / soFar.totalBytes;
             _store.getDispatch().upload.progress(percent * 100);
-            _store.getDispatch().upload.message(`You are ${percent * 100}`);    
+            _store.getDispatch().upload.message(`You are ${percent * 100}% complete`);   
           },
           function error(err) {
             console.error(err);
           },
           function complete() {
+            var time = new Date().toLocaleTimeString("en-US")
             _store.getDispatch().upload.progress(100);  
-            _store.getDispatch().upload.message(`You have uploaded the file ${file.name}`);                 
+            _store.getDispatch().upload.message(`You have uploaded the file ${file.name} at ${time}. You should probably find a public copy of this viewable in 5 minutes or less, see link below`);                 
           }
         );
         _store.getDispatch().upload.createRecord(name)
