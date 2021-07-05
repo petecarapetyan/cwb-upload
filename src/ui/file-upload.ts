@@ -59,7 +59,10 @@ export class FileUploadElement extends Connected {
               : html``
           }
           ${this.message && this.message.length>0?
-          html`<p>${this.message}</p>`:''}
+          html`<h3>${this.message}</h3>
+          <p> It takes 10 minutes (or more, depending) for the server to create web-optimized copies of an image for your use on web pages.</p>
+          <p><a href="yada"> Click here to see images that have already been processed</a></p>
+          `:''}
         `
       : html` <a href="/signin" title="Sign In"> Go to Sign In Page </a>`;
   }

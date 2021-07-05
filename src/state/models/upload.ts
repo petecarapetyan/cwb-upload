@@ -2,7 +2,7 @@ import { createModel } from "@captaincodeman/rdx";
 import { State } from "../store";
 import { storageLoader, firestoreLoader } from "../firebase";
 import { createSelector } from "reselect";
-import { underscore4space } from '../../pleasemigrate/regex';
+import { underscore4space } from '../../util/regex';
 
 export interface UploadState {
   file?: {};
@@ -38,7 +38,6 @@ export default createModel({
           function progress(soFar) {
             let percent = soFar.bytesTransferred / soFar.totalBytes;
             _store.getDispatch().upload.progress(percent * 100);
-            _store.getDispatch().upload.message(`You are ${percent * 100}% complete`);   
           },
           function error(err) {
             console.error(err);
@@ -46,7 +45,7 @@ export default createModel({
           function complete() {
             var time = new Date().toLocaleTimeString("en-US")
             _store.getDispatch().upload.progress(100);  
-            _store.getDispatch().upload.message(`You have uploaded the file ${file.name} at ${time}. You should probably find a public copy of this viewable in 5 minutes or less, see link below`);                 
+            _store.getDispatch().upload.message(`The file ${file.name} was uploaded at ${time}.`);                 
           }
         );
         _store.getDispatch().upload.createRecord(name)
