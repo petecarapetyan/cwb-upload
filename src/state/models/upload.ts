@@ -1,6 +1,6 @@
 import { createModel } from "@captaincodeman/rdx";
 import { State } from "../store";
-import { storageLoader, firestoreLoader } from "../firebase";
+import { storageLoader } from "../firebase";
 import { createSelector } from "reselect";
 import { underscore4space } from '../../util/regex';
 
@@ -51,16 +51,7 @@ export default createModel({
         _store.getDispatch().upload.createRecord(name)
       }
     },
-    async createRecord(name: string) {
-      const db = await firestoreLoader;
-      db.collection("media")
-        .add({
-          name
-        })
-        .catch(function (error) {
-          console.error(`Error adding ${name}`, error);
-        });
-    },
+    
     init(){
       _store.getDispatch().upload.message(""); 
 
