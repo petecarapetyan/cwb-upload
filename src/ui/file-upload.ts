@@ -43,7 +43,8 @@ export class FileUploadElement extends Connected {
   render() {
     return this.authenticated
       ? html`
-          <input accept="image/png, image/jpeg" type="file" id=”upload-file” name=”icon” 
+          <input accept="image/*, audio/*, video/*, .pdf"
+           type="file" id=”upload-file” name=”icon” 
                   @change=${this.selectFile}></input>
           ${
             this.progress > 0
